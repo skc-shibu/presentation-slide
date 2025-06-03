@@ -4,26 +4,66 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>プレゼンテーション一覧</title>
-  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- <link rel="stylesheet" href="style.css"> style.css is now empty or commented out -->
+  <style type="text/tailwindcss">
+    /* Custom Tailwind CSS directives or component styles can go here if needed in the future */
+    body {
+      /* Example of applying a base style via @apply if preferred, though utility classes directly in body tag are also fine */
+      /* @apply bg-slate-100 text-slate-700 font-sans leading-normal; */
+    }
+    /* Adding a custom animation for card hover for a subtle lift */
+    .presentation-tile {
+      @apply transition-all duration-300 ease-in-out;
+    }
+    .presentation-tile:hover {
+      @apply shadow-2xl transform -translate-y-1;
+    }
+  </style>
 </head>
-<body>
-  <header>
-    <h1>プレゼンテーションを選択</h1>
+<body class="bg-slate-100 text-slate-800 font-sans leading-relaxed"> {/* Applied base styles */}
+
+  <header class="bg-gradient-to-r from-slate-700 to-slate-900 text-white shadow-lg"> {/* Gradient background and larger shadow */}
+    <div class="container mx-auto px-6 py-10 text-center"> {/* Increased padding */}
+      <h1 class="text-5xl font-extrabold">プレゼンテーションを選択</h1> {/* Bolder and larger */}
+    </div>
   </header>
-  <main>
-    <div class="presentation-grid">
-      <a href="presentations/cline-introduction/index.html" class="presentation-tile">
-        <div class="tile-content">
-          <h2>CLINE紹介プレゼンテーション</h2>
-          <p>AIによる開発サポートツールCLINEの詳細な紹介です。</p>
+
+  <main class="container mx-auto px-6 py-16"> {/* Increased padding */}
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10"> {/* Increased gap */}
+      <!-- CLINE紹介プレゼンテーションタイル -->
+      <a href="presentations/cline-introduction/index.html" 
+         class="presentation-tile block bg-white rounded-xl shadow-lg overflow-hidden group"> {/* Softer rounded corners, kept hover effects in <style> for clarity */}
+        {/* Optional Thumbnail Placeholder
+        <div class="bg-sky-500 h-40 w-full flex items-center justify-center group-hover:bg-sky-600 transition-colors duration-300">
+          <svg class="w-16 h-16 text-white opacity-75" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+        </div>
+        */}
+        <div class="p-8"> {/* Increased padding for content area */}
+          <h2 class="text-2xl font-bold text-slate-700 mb-3 group-hover:text-sky-500 transition-colors duration-300">CLINE紹介プレゼンテーション</h2>
+          <p class="text-slate-600 text-base leading-relaxed">AIによる開発サポートツールCLINEの詳細な紹介です。次世代の開発体験をぜひご覧ください。</p> {/* Slightly larger text, more leading */}
         </div>
       </a>
-      <!-- 今後、他のプレゼンテーションタイルをここに追加 -->
+
+      {/* Example of a disabled/placeholder tile - can be removed or styled differently if not needed */}
+      <div class="block bg-white rounded-xl shadow-lg overflow-hidden opacity-50 cursor-not-allowed">
+        <div class="p-8">
+          <h2 class="text-2xl font-bold text-slate-400 mb-3">今後追加予定</h2>
+          <p class="text-slate-400 text-base leading-relaxed">新しいプレゼンテーションがここに追加される予定です。ご期待ください。</p>
+        </div>
+      </div>
+
+      {/* Add more presentation tiles here following the pattern */}
+
     </div>
   </main>
-  <footer>
-    <p>&copy; 2024 Your Name/Company</p>
+
+  <footer class="bg-slate-900 text-slate-300 mt-20"> {/* Darker footer, increased top margin */}
+    <div class="container mx-auto px-6 py-10 text-center text-sm"> {/* Increased padding */}
+      <p>&copy; 2024 CLINE Project (仮). All rights reserved.</p> {/* Updated placeholder name */}
+    </div>
   </footer>
+  <!-- script.js is empty as per instructions for now -->
   <script src="script.js"></script>
 </body>
 </html>
