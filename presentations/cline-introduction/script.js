@@ -296,18 +296,23 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
     }
     
+    // Animation for the slide container itself
     anime({
         targets: currentSlideElement,
         opacity: [0, 1],
         duration: 300, 
         easing: 'easeOutExpo',
+        // No explicit visibility here, opacity animation should make it appear.
+        // CSS for .slide ensures it starts at opacity: 0.
         complete: () => { 
+            // Animations for elements INSIDE the slide start here
             const mainTitle = currentSlideElement.querySelector('h2');
             if (mainTitle && currentSlideData.type !== 'title_subtitle' && currentSlideData.type !== 'closing_title') {
                  anime({
                     targets: mainTitle,
                     opacity: [0, 1],
                     translateY: [-20, 0],
+                    visibility: 'visible', // Added
                     duration: 800,
                     easing: 'easeOutExpo'
                 });
@@ -318,6 +323,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 targets: `#${currentSlideData.id} .title`,
                 opacity: [0, 1],
                 translateY: [-30, 0],
+                visibility: 'visible', // Added
                 duration: 1000,
                 delay: 200, 
                 easing: 'easeOutExpo'
@@ -326,6 +332,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 targets: `#${currentSlideData.id} .subtitle`,
                 opacity: [0, 1],
                 translateY: [30, 0],
+                visibility: 'visible', // Added
                 duration: 1000,
                 delay: 500, 
                 easing: 'easeOutExpo'
@@ -336,6 +343,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 targets: `#${currentSlideData.id} .explanation-container p`,
                 opacity: [0, 1],
                 translateY: [20, 0],
+                visibility: 'visible', // Added
                 duration: 800,
                 delay: anime.stagger(200, {start: 300}), 
                 easing: 'easeOutExpo'
@@ -346,13 +354,22 @@ document.addEventListener('DOMContentLoaded', () => {
                 targets: `#${currentSlideData.id} .feature`,
                 opacity: [0, 1],
                 scale: [0.8, 1],
+                visibility: 'visible', // Added
                 duration: 800,
                 delay: anime.stagger(150, {start: 300}),
                 easing: 'spring(1, 80, 10, 0)'
               });
                const footer = currentSlideElement.querySelector('.slide-footer');
                if (footer) {
-                 anime({ targets: footer, opacity: [0,1], translateY: [15,0], duration: 800, delay: 700, easing: 'easeOutExpo'});
+                 anime({ 
+                     targets: footer, 
+                     opacity: [0,1], 
+                     translateY: [15,0], 
+                     visibility: 'visible', // Added
+                     duration: 800, 
+                     delay: 700, 
+                     easing: 'easeOutExpo'
+                });
                }
             }
             else if (currentSlideData.type === 'benefits_list') {
@@ -360,21 +377,32 @@ document.addEventListener('DOMContentLoaded', () => {
                 targets: `#${currentSlideData.id} .benefit`,
                 opacity: [0, 1],
                 translateX: [-30, 0],
+                visibility: 'visible', // Added
                 duration: 700,
                 delay: anime.stagger(200, {start: 300}),
                 easing: 'easeOutExpo'
               });
               anime({
                 targets: `#${currentSlideData.id} .benefit .icon`,
+                opacity: [0,1], // Added opacity for icon itself
                 rotate: ['-180deg', '0deg'],
                 scale: [0,1],
+                visibility: 'visible', // Added
                 duration: 1000,
                 delay: anime.stagger(200, {start: 400}),
                 easing: 'spring(1,80,10,0)'
               });
               const footer = currentSlideElement.querySelector('.slide-footer');
               if (footer) {
-                anime({ targets: footer, opacity: [0,1], translateY: [15,0], duration: 800, delay: 800, easing: 'easeOutExpo'});
+                anime({ 
+                    targets: footer, 
+                    opacity: [0,1], 
+                    translateY: [15,0], 
+                    visibility: 'visible', // Added
+                    duration: 800, 
+                    delay: 800, 
+                    easing: 'easeOutExpo'
+                });
               }
             }
             else if (currentSlideData.type === 'steps_list') {
@@ -382,13 +410,22 @@ document.addEventListener('DOMContentLoaded', () => {
                 targets: `#${currentSlideData.id} .step-card`,
                 opacity: [0, 1],
                 translateY: [30, 0],
+                visibility: 'visible', // Added
                 duration: 800,
                 delay: anime.stagger(250, {start: 300}),
                 easing: 'easeOutExpo'
               });
               const footer = currentSlideElement.querySelector('.slide-footer');
               if (footer) {
-                anime({ targets: footer, opacity: [0,1], translateY: [15,0], duration: 800, delay: 900, easing: 'easeOutExpo'});
+                anime({ 
+                    targets: footer, 
+                    opacity: [0,1], 
+                    translateY: [15,0], 
+                    visibility: 'visible', // Added
+                    duration: 800, 
+                    delay: 900, 
+                    easing: 'easeOutExpo'
+                });
               }
             }
             else if (currentSlideData.type === 'reveal_text') {
@@ -396,28 +433,45 @@ document.addEventListener('DOMContentLoaded', () => {
                     targets: `#${currentSlideData.id} .reveal-text`,
                     opacity: [0, 1],
                     translateY: [20, 0],
+                    visibility: 'visible', // Added
                     duration: 1000,
                     delay: 500, 
                     easing: 'easeOutExpo'
                 });
                 anime({
                     targets: `#${currentSlideData.id} .highlight`,
+                    opacity: [0, 1], // Added opacity
                     scale: [0.8, 1],
-                    opacity: [0, 1],
+                    visibility: 'visible', // Added
                     duration: 1200,
                     delay: 1200, 
                     easing: 'spring(1, 80, 10, 0)'
                 });
-                const additionalP = currentSlideElement.querySelectorAll('p');
-                if(additionalP.length > 2) { 
+                // Targeting the additionalText paragraph, which is the last 'p' in .reveal-slide
+                const additionalP = currentSlideElement.querySelectorAll('.reveal-slide > p');
+                if(additionalP.length > 2) { // Check if it exists (title h2, reveal-text p, highlight p, then additionalText p)
                      anime({
                         targets: additionalP[additionalP.length -1], 
                         opacity: [0,1],
                         translateY: [20,0],
+                        visibility: 'visible', // Added
                         duration: 800,
-                        delay: 2000,
+                        delay: 2000, // Delay after highlight
                         easing: 'easeOutExpo'
                     });
+                } else { // Fallback if additionalText might be the direct sibling after highlight
+                    const directNextP = currentSlideElement.querySelector('.highlight + p');
+                    if (directNextP) {
+                        anime({
+                            targets: directNextP,
+                            opacity: [0,1],
+                            translateY: [20,0],
+                            visibility: 'visible', // Added
+                            duration: 800,
+                            delay: 2000,
+                            easing: 'easeOutExpo'
+                        });
+                    }
                 }
             }
              else if (currentSlideData.type === 'closing_title') {
@@ -425,6 +479,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 targets: `#${currentSlideData.id} .closing-title`,
                 opacity: [0, 1],
                 scale: [0.9, 1],
+                visibility: 'visible', // Added
                 duration: 1200,
                 delay: 200,
                 easing: 'easeOutExpo'
@@ -433,6 +488,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 targets: `#${currentSlideData.id} .thank-you`,
                 opacity: [0, 1],
                 translateY: [20, 0],
+                visibility: 'visible', // Added
                 duration: 1000,
                 delay: 800,
                 easing: 'easeOutExpo'
