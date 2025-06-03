@@ -1,35 +1,29 @@
 <!DOCTYPE html>
 <html lang="ja">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>CLINE紹介プレゼンテーション</title>
-    <link
-      href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Fira+Code&display=swap"
-      rel="stylesheet"
-    />
-    <link href="style.css" rel="stylesheet" />
-  </head>
-  <body>
-    <select id="presentation-selector"></select>
-
-    <div class="presentation-container">
-      <div id="slide-display-area">
-        <!-- スライドはここに動的に挿入される -->
-      </div>
-
-      <div class="navigation">
-        <button class="prev-btn">← 前へ</button>
-        <div class="progress-bar"></div>
-        <button class="next-btn">次へ →</button>
-      </div>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>プレゼンテーション一覧</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>プレゼンテーションを選択</h1>
+  </header>
+  <main>
+    <div class="presentation-grid">
+      <a href="presentations/cline-introduction/index.html" class="presentation-tile">
+        <div class="tile-content">
+          <h2>CLINE紹介プレゼンテーション</h2>
+          <p>AIによる開発サポートツールCLINEの詳細な紹介です。</p>
+        </div>
+      </a>
+      <!-- 今後、他のプレゼンテーションタイルをここに追加 -->
     </div>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
-    <script src="script.js"></script>
-  </body>
+  </main>
+  <footer>
+    <p>&copy; 2024 Your Name/Company</p>
+  </footer>
+  <script src="script.js"></script>
+</body>
 </html>
