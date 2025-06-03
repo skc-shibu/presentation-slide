@@ -1,6 +1,6 @@
-const presentationData = { // Changed from presentations array
+const presentationData = {
   id: "clinePresentation",
-  title: "CLINE紹介プレゼンテーション", // This title might not be directly used by this script anymore
+  title: "CLINE紹介プレゼンテーション",
   slides: [
     {
       id: "slide1",
@@ -86,24 +86,17 @@ const presentationData = { // Changed from presentations array
     }
   ]
 };
-// Removed dummyTestPresentation data
 
-// let currentPresentationId = null; // Removed
 let currentSlideIndex = 0;
 
 document.addEventListener('DOMContentLoaded', () => {
-  // const presentationSelector = document.getElementById('presentation-selector'); // Removed
   const slideDisplayArea = document.getElementById('slide-display-area');
   const prevBtn = document.querySelector('.prev-btn');
   const nextBtn = document.querySelector('.next-btn');
   const progressBar = document.querySelector('.progress-bar');
 
-  // function initPresentationSelector() { ... } // Removed
-
-  function renderSlide(slideIndex) { // presentationId argument removed
-    // const presentation = presentations.find(p => p.id === presentationId); // Removed
-    // Use presentationData directly
-    if (!presentationData) { // Check if presentationData is defined (it should be)
+  function renderSlide(slideIndex) {
+    if (!presentationData) {
       console.error(`Presentation data not found.`);
       slideDisplayArea.innerHTML = `<div class="slide active error"><p>Error: Presentation data not found.</p></div>`;
       return;
@@ -114,10 +107,8 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
 
-    // currentPresentationId = presentationId; // Removed
     currentSlideIndex = slideIndex;
-
-    const slide = presentationData.slides[slideIndex]; // Use presentationData
+    const slide = presentationData.slides[slideIndex];
     slideDisplayArea.innerHTML = ''; 
 
     const slideElement = document.createElement('div');
@@ -249,26 +240,24 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function updateNavigationButtons() {
-    // if (!currentPresentationId) { ... } // Removed check, as there's only one presentation context
     if (!presentationData) { 
       prevBtn.disabled = true;
       nextBtn.disabled = true;
       return;
     }
     prevBtn.disabled = currentSlideIndex === 0;
-    nextBtn.disabled = currentSlideIndex >= presentationData.slides.length - 1; // Use presentationData
+    nextBtn.disabled = currentSlideIndex >= presentationData.slides.length - 1;
   }
 
   nextBtn.addEventListener('click', () => {
-    // const presentation = presentations.find(p => p.id === currentPresentationId); // Removed
-    if (presentationData && currentSlideIndex < presentationData.slides.length - 1) { // Use presentationData
-      renderSlide(currentSlideIndex + 1); // Pass only index
+    if (presentationData && currentSlideIndex < presentationData.slides.length - 1) {
+      renderSlide(currentSlideIndex + 1);
     }
   });
 
   prevBtn.addEventListener('click', () => {
     if (currentSlideIndex > 0) {
-      renderSlide(currentSlideIndex - 1); // Pass only index
+      renderSlide(currentSlideIndex - 1);
     }
   });
   
@@ -280,32 +269,26 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  // initPresentationSelector(); // Removed
-  if (presentationData && presentationData.slides.length > 0) { // Check presentationData
-    // const initialPresentationId = presentations[0].id; // Removed
-    renderSlide(0); // Render first slide of presentationData
+  if (presentationData && presentationData.slides.length > 0) {
+    renderSlide(0);
   } else {
-    slideDisplayArea.innerHTML = '<p>No presentation data available.</p>'; // Adjusted message
+    slideDisplayArea.innerHTML = '<p>No presentation data available.</p>';
     updateNavigationButtons();
   }
 
-  // presentationSelector.addEventListener('change', (event) => { ... }); // Removed
-
   function updateProgressBar() {
-    // if (!currentPresentationId) { ... } // Removed
-    if (!presentationData || presentationData.slides.length === 0) { // Use presentationData
+    if (!presentationData || presentationData.slides.length === 0) {
         progressBar.style.setProperty('--progress', `0%`);
         return;
     }
-    const progress = ((currentSlideIndex + 1) / presentationData.slides.length) * 100; // Use presentationData
+    const progress = ((currentSlideIndex + 1) / presentationData.slides.length) * 100;
     progressBar.style.setProperty('--progress', `${progress}%`);
   }
 
   function playSlideAnimations() {
-    // if (!currentPresentationId) return; // Removed
-    if (!presentationData) return; // Use presentationData
+    if (!presentationData) return;
     
-    const currentSlideData = presentationData.slides[currentSlideIndex]; // Use presentationData
+    const currentSlideData = presentationData.slides[currentSlideIndex];
     const currentSlideElement = document.querySelector(`#slide-display-area #${currentSlideData.id}.slide.active`);
 
     if (!currentSlideElement) {
