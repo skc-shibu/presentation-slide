@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CLINE紹介プレゼンテーション</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fira+Code&display=swap"
+      rel="stylesheet"
+    />
+    <link href="./style.css" rel="stylesheet" /> {/* Changed path */}
+  </head>
+  <body>
+    {/* <select id="presentation-selector"></select> Removed */}
+
+    <div class="presentation-container">
+      <div id="slide-display-area">
+        <!-- スライドはここに動的に挿入される -->
+      </div>
+
+      <div class="navigation">
+        <button class="prev-btn">← 前へ</button>
+        <div class="progress-bar"></div>
+        <button class="next-btn">次へ →</button>
+      </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <script src="./script.js"></script> {/* Changed path */}
+  </body>
+</html>

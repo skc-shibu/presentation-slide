@@ -1,0 +1,595 @@
+:root {
+  --main-bg: #2D3748;
+  --accent: #4299E1;
+  --text: #E2E8F0;
+  --code-bg: #1A202C;
+  --highlight: #F6AD55;
+  --container-bg: rgba(45, 55, 72, 0.8); /* Added for consistency */
+}
+
+body {
+  font-family: 'Noto Sans JP', sans-serif;
+  background-color: var(--main-bg);
+  color: var(--text);
+  margin: 0;
+  padding: 0;
+  /* height: 100vh; Removed to allow content to define height if needed, though likely covered by presentation-container */
+  overflow: hidden; /* Keep this to prevent scrollbars from body */
+  display: flex; /* Added to help with centering selector if desired */
+  flex-direction: column; /* Stack selector and presentation */
+  align-items: center; /* Center selector */
+}
+
+#presentation-selector {
+  display: block;
+  margin: 1rem auto; /* Centering */
+  padding: 0.75rem 1.25rem; /* Increased padding */
+  font-size: 1rem;
+  background-color: var(--accent);
+  color: white;
+  border: none;
+  border-radius: 0.375rem; /* Slightly more rounded */
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2); /* Added subtle shadow */
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+}
+
+#presentation-selector:hover {
+  background-color: #3182CE; /* Darken on hover */
+}
+
+#presentation-selector:focus {
+  outline: 2px solid var(--highlight); /* Accessibility */
+  outline-offset: 2px;
+}
+
+.presentation-container {
+  width: 100vw; /* Ensure it takes full viewport width */
+  height: 100vh; /* Ensure it takes full viewport height */
+  position: relative; /* For absolute positioning of slides and navigation */
+  overflow: hidden; /* Prevent internal scrollbars if content overflows by mistake */
+}
+
+/* This will be the direct child of presentation-container where slides are rendered */
+#slide-display-area {
+  width: 100%;
+  height: 100%;
+  position: relative; /* If slides inside are absolute, this acts as their containing block */
+}
+
+.slide {
+  /* position: absolute; already defined, this is critical */
+  width: 100%;
+  height: 100%;
+  top: 0; /* Ensure it aligns to the top of slide-display-area */
+  left: 0; /* Ensure it aligns to the left of slide-display-area */
+  padding: 2rem;
+  box-sizing: border-box;
+  /* display: none; Will be handled by script (adding .active) */
+  opacity: 0;
+  /* transition: opacity 0.5s ease; Managed by anime.js now, but can be a fallback */
+  display: flex; /* Default flex for all slides */
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center; /* Default text alignment for slides */
+}
+
+/* Ensure .active makes the slide visible */
+#slide-display-area > .slide.active {
+  display: flex; /* Or block, depending on slide content needs, flex is good default */
+  opacity: 1; /* This will be animated by anime.js */
+}
+
+
+/* スライド7のスタイル */
+#slide7 { /* Selector should be specific enough if IDs are unique: #slide-display-area #slide7 */
+  background: linear-gradient(135deg, #1E3A8A 0%, #1E40AF 100%);
+}
+
+#slide7 h2 {
+  color: white;
+  font-size: 2.5rem;
+  margin-bottom: 3rem;
+  text-align: center;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+#slide7 .explanation-container {
+  width: 80%;
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+#slide7 .explanation-container p { /* More specific selector if needed */
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 2rem;
+  padding: 1.5rem;
+  background-color: rgba(255,255,255,0.1);
+  border-radius: 0.5rem;
+  border-left: 4px solid var(--accent);
+  /* opacity: 0; Handled by anime.js */
+  /* transform: translateY(20px); Handled by anime.js */
+}
+
+/* .slide.active #slide7 p { animation: slideUp 0.8s ease forwards; } Replaced by anime.js */
+/* .slide.active #slide7 p:nth-child(1) { animation-delay: 0.3s; } */
+/* .slide.active #slide7 p:nth-child(2) { animation-delay: 0.6s; } */
+/* .slide.active #slide7 p:nth-child(3) { animation-delay: 0.9s; } */
+
+#slide7 .explanation-container p::before {
+  content: attr(data-title);
+  font-size: 1.8rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  color: var(--text); /* Ensure text color is consistent */
+}
+
+#slide7 .explanation-container p::after {
+  content: attr(data-content);
+  font-size: 1.4rem;
+  line-height: 1.6;
+  color: var(--text); /* Ensure text color is consistent */
+}
+
+/* スライド2のスタイル */
+#slide2 { /* Selector should be specific enough: #slide-display-area #slide2 */
+  background: linear-gradient(135deg, #1E3A8A 0%, #1E40AF 100%);
+}
+
+#slide2 h2 { /* Shared with #slide7 h2, could be combined */
+  color: white;
+  font-size: 2.5rem;
+  margin-bottom: 3rem;
+  text-align: center;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+#slide2 .explanation-container { /* Shared with #slide7 .explanation-container */
+  width: 80%;
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+#slide2 .explanation-container p { /* Shared with #slide7 p, with different animation delays */
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 2rem;
+  padding: 1.5rem;
+  background-color: rgba(255,255,255,0.1);
+  border-radius: 0.5rem;
+  border-left: 4px solid var(--accent);
+  /* opacity: 0; transform: translateY(20px); animation: slideUp 0.8s ease forwards; Replaced by anime.js */
+}
+
+#slide2 .explanation-container p::before { /* Shared with #slide7 p::before */
+  content: attr(data-title);
+  font-size: 1.8rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  color: var(--text);
+}
+
+#slide2 .explanation-container p::after { /* Shared with #slide7 p::after */
+  content: attr(data-content);
+  font-size: 1.4rem;
+  line-height: 1.6;
+  color: var(--text);
+}
+
+/* #slide2 p:nth-child(1) { animation-delay: 0.3s; } Replaced by anime.js stagger */
+/* #slide2 p:nth-child(2) { animation-delay: 0.6s; } */
+/* #slide2 p:nth-child(3) { animation-delay: 0.9s; } */
+
+
+/* Common styles for footers */
+.slide-footer {
+  /* position: absolute; bottom: 6rem; left: 0; right: 0; Removed, let flexbox handle positioning within slide */
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem; /* Increased gap */
+  padding: 1rem; /* Added padding */
+  margin-top: 2rem; /* Space from content above */
+  width: 100%; /* Take full width of slide content area */
+  /* opacity: 0; transform: translateY(20px); Handled by anime.js */
+}
+
+/* .slide.active #slide3 .slide-footer, ... { animation: slideUp 0.6s ease 0.8s forwards; } Replaced by anime.js */
+
+.footer-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1rem;
+  background: var(--container-bg); /* Use consistent bg */
+  border-radius: 0.5rem;
+  min-width: 120px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.15); /* Added shadow */
+}
+
+.footer-icon {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+  color: var(--accent);
+}
+
+.footer-text {
+  font-size: 0.9rem;
+  text-align: center;
+  color: var(--text);
+}
+
+
+/* モダンな始め方スライドスタイル - #slide5 */
+#slide5 h2 { margin-bottom: 2rem; } /* Space for title */
+
+.modern-steps {
+  display: flex; /* Changed to flex for easier centering and wrapping */
+  flex-wrap: wrap; /* Allow wrapping on smaller screens */
+  justify-content: center;
+  gap: 1.5rem;
+  width: 100%;
+  max-width: 1000px; /* Max width for step cards container */
+  padding: 0 1rem; /* Padding for smaller screens */
+  box-sizing: border-box;
+}
+
+.step-card {
+  display: flex;
+  align-items: flex-start;
+  background: var(--container-bg);
+  border-radius: 0.6rem;
+  padding: 1.5rem;
+  border-left: 4px solid var(--accent);
+  transition: all 0.3s ease;
+  /* opacity: 0; transform: translateY(30px); Handled by anime.js */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  font-size: 1rem; /* Adjusted base font size */
+  line-height: 1.6;
+  width: calc(33.333% - 1rem); /* Aim for 3 cards per row, adjusting for gap */
+  min-width: 280px; /* Minimum width before wrapping */
+  box-sizing: border-box;
+}
+
+
+@media (max-width: 992px) { /* Adjust breakpoint for 2 cards */
+  .step-card {
+    width: calc(50% - 0.75rem); /* 2 cards per row */
+  }
+}
+
+@media (max-width: 600px) { /* Adjust breakpoint for 1 card */
+  .modern-steps { padding: 0; }
+  .step-card {
+    width: 100%; /* 1 card per row */
+    min-width: unset;
+  }
+}
+
+/* .slide.active .step-card { animation: slideUp 0.8s ease forwards; } Replaced by anime.js */
+
+.step-card:hover {
+  transform: translateY(-3px) scale(1.01); /* Enhanced hover */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* .slide.active .step-card:nth-child(1) { animation-delay: 0.5s; } Replaced by anime.js stagger */
+/* .slide.active .step-card:nth-child(2) { animation-delay: 1s; } */
+/* .slide.active .step-card:nth-child(3) { animation-delay: 1.5s; } */
+
+.step-number {
+  font-size: 1.5rem; /* Adjusted size */
+  font-weight: bold;
+  color: var(--accent);
+  margin-right: 1rem; /* Increased margin */
+  min-width: 2rem; /* Adjusted width */
+  text-align: center;
+}
+
+.step-content {
+  flex: 1;
+}
+
+.step-content h3 {
+  color: var(--accent);
+  margin: 0 0 0.6rem 0; /* Adjusted margin */
+  font-size: 1.25rem; /* Adjusted size */
+}
+
+.step-content h3 .icon { /* Style for icon within h3 */
+  margin-right: 0.5rem;
+  font-size: 1.2em; /* Relative to h3 font size */
+}
+
+.step-content p {
+  margin: 0;
+  font-size: 0.95rem; /* Adjusted size */
+  line-height: 1.5;
+}
+
+/* その他の既存スタイル */
+/* .explanation-container defined with slide2/slide7 */
+
+/* .benefit-item { opacity: 0; animation: slideUp 0.5s ease forwards; } Replaced by anime.js */
+/* .benefit-item:nth-child(1) { animation-delay: 0.3s; } */
+/* .benefit-item:nth-child(2) { animation-delay: 0.6s; } */
+/* .benefit-item:nth-child(3) { animation-delay: 0.9s; } */
+
+/* .slide.active { display: block; opacity: 1; } Base .slide.active is now flex */
+
+h1, h2, h3 { /* General heading styles */
+  color: var(--text); /* Default text color for headings */
+  margin-top: 0; /* Remove default top margin */
+}
+.slide h1, .slide h2, .slide h3 { /* More specific for slides */
+    color: var(--accent); /* Accent for slide titles */
+}
+
+
+/* Title slide specifics */
+#slide1 .title, #slide-display-area .slide.active .title_subtitle .title { /* For title_subtitle type */
+  font-size: clamp(2.5rem, 5vw, 3.8rem); /* Responsive font size */
+  margin-bottom: 1rem;
+  /* text-align: center; from .slide */
+  /* position: relative; top: 30%; transform: translateY(-50%); Removed, rely on flexbox */
+}
+
+#slide1 .subtitle, #slide-display-area .slide.active .title_subtitle .subtitle { /* For title_subtitle type */
+  font-size: clamp(1.5rem, 3vw, 2.2rem); /* Responsive font size */
+  /* text-align: center; from .slide */
+  /* position: relative; top: 30%; transform: translateY(-50%); Removed, rely on flexbox */
+  color: var(--text); /* Softer color for subtitle */
+  font-weight: 400;
+}
+
+
+/* Features Grid - #slide3 */
+#slide3 h2, #slide-display-area .slide.active .features_grid h2 { margin-bottom: 2rem; }
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Responsive grid */
+  gap: 2rem;
+  width: 100%;
+  max-width: 900px; /* Max width for grid */
+  margin-top: 1rem; /* Adjusted from 3rem */
+}
+
+.feature {
+  text-align: center;
+  padding: 1.5rem;
+  border-radius: 0.5rem;
+  background-color: var(--container-bg);
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.feature .icon { /* Specific for feature icons */
+  font-size: 2.8rem; /* Adjusted */
+  margin-bottom: 1rem;
+  display: block; /* Ensure it's block for centering */
+  color: var(--accent);
+}
+.feature h3 {
+    font-size: 1.4rem;
+    margin-bottom: 0.5rem;
+    color: var(--highlight);
+}
+.feature p {
+    font-size: 0.9rem;
+    line-height: 1.4;
+    color: var(--text);
+}
+
+
+/* Benefits List - #slide4 */
+#slide4 h2, #slide-display-area .slide.active .benefits_list h2 { margin-bottom: 2rem; }
+
+.benefits {
+  display: flex;
+  flex-wrap: wrap; /* Allow wrapping */
+  justify-content: center; /* Center items */
+  gap: 2rem; /* Gap between items */
+  margin-top: 1rem; /* Adjusted */
+  width: 100%;
+  max-width: 1000px;
+}
+
+.benefit {
+  width: calc(33.333% - 1.5rem); /* Aim for 3, adjust for gap */
+  min-width: 260px; /* Min width before wrapping */
+  padding: 1.5rem;
+  background-color: var(--container-bg);
+  border-radius: 0.5rem;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  text-align: center; /* Center benefit content */
+}
+@media (max-width: 900px) {
+    .benefit { width: calc(50% - 1rem); }
+}
+@media (max-width: 600px) {
+    .benefit { width: 100%; }
+}
+
+
+.benefit .icon { /* Specific for benefit icons */
+  font-size: 2.8rem;
+  margin-bottom: 1rem;
+  display: block;
+  color: var(--accent);
+}
+.benefit h3 {
+    font-size: 1.4rem;
+    margin-bottom: 0.5rem;
+    color: var(--highlight);
+}
+.benefit p {
+    font-size: 0.9rem;
+    line-height: 1.4;
+    color: var(--text);
+}
+
+
+/* Reveal Slide - #slide6 */
+.reveal-slide {
+  background-color: var(--code-bg); /* Full slide background */
+  width: 100%; /* Ensure it spans the full slide area defined by .slide */
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem; /* Padding within the reveal area */
+  text-align: center;
+  box-sizing: border-box; /* Include padding in width/height */
+}
+.reveal-slide h2 {
+    font-size: clamp(1.8rem, 4vw, 2.5rem);
+    margin-bottom: 1.5rem;
+    color: var(--accent);
+}
+.reveal-text {
+  font-size: clamp(1.2rem, 2.5vw, 1.8rem);
+  margin: 1rem 0;
+  color: var(--text);
+  /* opacity: 0; animation: fadeIn 1s ease 0.5s forwards; Replaced by anime.js */
+}
+.reveal-slide .highlight { /* More specific selector */
+  color: var(--highlight);
+  font-size: clamp(1.5rem, 3.5vw, 2.5rem);
+  font-weight: bold;
+  margin: 1.5rem 0; /* Adjusted margin */
+  /* animation: glow 2s infinite; Replaced by anime.js if needed, or keep for CSS only glow */
+}
+.reveal-slide p:not(.reveal-text):not(.highlight) { /* For additional text */
+    font-size: clamp(1rem, 2vw, 1.3rem);
+    color: var(--text);
+    margin-top: 1rem;
+}
+
+
+/* Closing Slide - #slide8 */
+.closing-title { /* This is an H1 */
+  /* text-align: center; from .slide */
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  /* margin-top: 20%; Removed, rely on flexbox centering */
+  color: var(--accent);
+}
+.thank-you { /* This is a p */
+  /* text-align: center; from .slide */
+  font-size: clamp(1.2rem, 2.5vw, 1.8rem);
+  margin-top: 2rem; /* Adjusted margin */
+  color: var(--text);
+  font-weight: 400;
+}
+
+
+.navigation {
+  position: fixed;
+  bottom: 1.5rem; /* Adjusted position */
+  left: 50%; /* Center the navigation block */
+  transform: translateX(-50%); /* Fine-tune centering */
+  width: auto; /* Auto width based on content */
+  max-width: 90%; /* Max width */
+  display: flex;
+  justify-content: center; /* Center buttons and progress bar */
+  align-items: center;
+  padding: 0.75rem 1.5rem; /* Padding inside navigation area */
+  box-sizing: border-box;
+  background-color: rgba(0,0,0,0.3); /* Subtle background for nav */
+  border-radius: 0.5rem; /* Rounded corners for nav */
+  z-index: 100; /* Ensure it's above other content */
+}
+
+.progress-bar {
+  flex-grow: 1;
+  min-width: 150px; /* Minimum width for progress bar */
+  max-width: 400px; /* Maximum width for progress bar */
+  height: 6px; /* Slightly thicker */
+  background-color: rgba(255, 255, 255, 0.2);
+  margin: 0 1rem;
+  border-radius: 5px;
+  position: relative;
+  overflow: hidden;
+}
+
+.progress-bar::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: var(--progress, 0%);
+  background-color: var(--accent);
+  transition: width 0.3s ease;
+  border-radius: 5px;
+}
+
+button.prev-btn, button.next-btn { /* Targeting specific buttons */
+  background-color: var(--accent);
+  color: white;
+  border: none;
+  padding: 0.6rem 1.2rem; /* Adjusted padding */
+  border-radius: 0.375rem;
+  cursor: pointer;
+  font-family: 'Noto Sans JP', sans-serif;
+  font-size: 0.9rem; /* Adjusted font size */
+  transition: all 0.2s ease; /* Faster transition */
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+button.prev-btn:disabled, button.next-btn:disabled {
+  background-color: #4A5568; /* Keep disabled style */
+  cursor: not-allowed;
+  opacity: 0.6; /* Slightly more opaque */
+}
+
+button.prev-btn:hover:not(:disabled), button.next-btn:hover:not(:disabled) {
+  background-color: #3182CE;
+  transform: translateY(-1px); /* Subtle lift */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+}
+
+button.prev-btn:active:not(:disabled), button.next-btn:active:not(:disabled) {
+  transform: translateY(0);
+  background-color: #2B6CB0; /* Slightly darker on active */
+}
+
+/* Remove old CSS animations if fully replaced by anime.js */
+/* @keyframes fadeIn { ... } */
+/* @keyframes slideUp { ... } */
+/* @keyframes typewriter { ... } */
+/* @keyframes glow { ... } */
+
+/* Remove direct animation calls if anime.js handles them all */
+/* .title { animation: typewriter ...; } */
+/* .features li { animation: slideUp ...; } */
+/* .highlight { animation: glow ...; } */
+/* .reveal-text { animation: fadeIn ...; } */
+
+/* Generic icon class if needed for items like in step_content h3 */
+.icon {
+  /* Common icon styling if any - already used for feature/benefit icons */
+}
+
+/* Code background for slide 6 - if brought back from JS */
+.code-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.05; /* Very subtle */
+    font-family: 'Fira Code', monospace;
+    white-space: pre;
+    overflow: hidden;
+    z-index: -1; /* Behind content */
+    padding: 2rem;
+    font-size: 1rem; /* Adjust as needed */
+    color: var(--accent);
+    line-height: 1.4;
+    pointer-events: none; /* Make sure it's not interactive */
+}
+[end of style.css]
